@@ -43,6 +43,10 @@ class Edge:
         # Список «просветов»
         self.gaps = [Segment(Edge.SBEG, Edge.SFIN)]
 
+        self.length = R3.abs(beg - fin)
+        # Удовлетворяет ли условиям мод.70
+        self.special = True if 2.0 < (beg + fin).x < 6.0 else False
+
     # Учёт тени от одной грани
     def shadow(self, facet):
         # «Вертикальная» грань не затеняет ничего
@@ -60,6 +64,9 @@ class Edge:
                 facet.vertexes[0], facet.h_normal()))
         if shade.is_degenerate():
             return
+        else:
+            self.special = False
+
         # Преобразование списка «просветов», если тень невырождена
         gaps = [s.subtraction(shade) for s in self.gaps]
         self.gaps = [
@@ -128,6 +135,9 @@ class Polyedr:
         # списки вершин, рёбер и граней полиэдра
         self.vertexes, self.edges, self.facets = [], [], []
 
+        # суммарная длина ребер, удволетворяющих условиям задачи на модификацию
+        self.length = 0.0
+
         # список строк файла
         with open(file) as f:
             for i, line in enumerate(f):
@@ -165,5 +175,6 @@ class Polyedr:
         for e in self.edges:
             for f in self.facets:
                 e.shadow(f)
+            self.length += e.length * e.special
             for s in e.gaps:
                 tk.draw_line(e.r3(s.beg), e.r3(s.fin))
