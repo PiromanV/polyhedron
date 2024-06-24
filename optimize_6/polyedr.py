@@ -8,6 +8,7 @@ from common.tk_drawer import TkDrawer
 
 class Segment:
     """ Одномерный отрезок """
+
     # Параметры конструктора: начало и конец отрезка (числа)
 
     def __init__(self, beg, fin):
@@ -52,8 +53,8 @@ class Edge:
 
         # xy-прямоугольник грани должен пересекать xy-прямоугольник ребра
         if (min([self.beg.x, self.fin.x]) > facet.xmax or
-            max([self.beg.x, self.fin.x]) < facet.xmin or
-            min([self.beg.y, self.fin.y]) > facet.ymax or
+                max([self.beg.x, self.fin.x]) < facet.xmin or
+                min([self.beg.y, self.fin.y]) > facet.ymax or
                 max([self.beg.y, self.fin.y]) < facet.ymin):
             return
 
@@ -97,6 +98,7 @@ class Edge:
 
 class Facet:
     """ Грань полиэдра """
+
     # Параметры конструктора: список вершин
 
     def __init__(self, vertexes):
@@ -125,7 +127,7 @@ class Facet:
         self._center = sum(self.vertexes, R3(0.0, 0.0, 0.0)
                            ) * (1.0 / len(self.vertexes))
         n = (
-            self.vertexes[1] - self.vertexes[0]).cross(
+                self.vertexes[1] - self.vertexes[0]).cross(
             self.vertexes[2] - self.vertexes[0])
         self._h_normal = n * (-1.0) if n.dot(Polyedr.V) < 0.0 else n
         self._v_normals = [self._vert(x) for x in range(len(self.vertexes))]
@@ -140,7 +142,7 @@ class Facet:
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
         return n * \
-            (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
 
 
 class Polyedr:
@@ -197,15 +199,15 @@ class Polyedr:
     def optimize(self):
         stage_time = time()
         result = "   Удаление дубликатов рёбер\n" + \
-            "     Рёбер до    : %6d\n" % len(self.edges)
+                 "     Рёбер до    : %6d\n" % len(self.edges)
         self.edges_uniq()
         result += "     Рёбер после : %6d\n" % len(self.edges) + \
-            "     Время       : %6.2f сек.\n" % (time() - stage_time)
+                  "     Время       : %6.2f сек.\n" % (time() - stage_time)
         stage_time = time()
         for f in self.facets:
             f.precompile()
         result += "   Предкомпиляция граней\n" + \
-            "     Время       : %6.2f сек." % (time() - stage_time)
+                  "     Время       : %6.2f сек." % (time() - stage_time)
         return result
 
     # Нахождение «просветов»

@@ -9,6 +9,7 @@ from common.tk_drawer import TkDrawer
 
 class Segment:
     """ Одномерный отрезок """
+
     # Параметры конструктора: начало и конец отрезка (числа)
 
     def __init__(self, beg, fin):
@@ -91,6 +92,7 @@ class Edge:
 
 class Facet:
     """ Грань полиэдра """
+
     # Параметры конструктора: список вершин
 
     def __init__(self, vertexes):
@@ -119,7 +121,7 @@ class Facet:
         self._center = sum(self.vertexes, R3(0.0, 0.0, 0.0)
                            ) * (1.0 / len(self.vertexes))
         n = (
-            self.vertexes[1] - self.vertexes[0]).cross(
+                self.vertexes[1] - self.vertexes[0]).cross(
             self.vertexes[2] - self.vertexes[0])
         self._h_normal = n * (-1.0) if n.dot(Polyedr.V) < 0.0 else n
         self._v_normals = [self._vert(x) for x in range(len(self.vertexes))]
@@ -134,7 +136,7 @@ class Facet:
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
         return n * \
-            (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
 
 
 class Polyedr:
@@ -191,20 +193,20 @@ class Polyedr:
     def optimize(self):
         stage_time = time()
         result = "   Удаление дубликатов рёбер\n" + \
-            "     Рёбер до    : %6d\n" % len(self.edges)
+                 "     Рёбер до    : %6d\n" % len(self.edges)
         self.edges_uniq()
         result += "     Рёбер после : %6d\n" % len(self.edges) + \
-            "     Время       : %6.2f сек.\n" % (time() - stage_time)
+                  "     Время       : %6.2f сек.\n" % (time() - stage_time)
         stage_time = time()
         for f in self.facets:
             f.precompile()
         result += "   Предкомпиляция граней\n" + \
-            "     Время       : %6.2f сек.\n" % (time() - stage_time)
+                  "     Время       : %6.2f сек.\n" % (time() - stage_time)
         stage_time = time()
         self.facets_nests()
         result += "   Гнездование граней\n" + \
-            "     Размер гнёзд: %6.2f\n" % self.step + \
-            "     Время       : %6.2f сек." % (time() - stage_time)
+                  "     Размер гнёзд: %6.2f\n" % self.step + \
+                  "     Время       : %6.2f сек." % (time() - stage_time)
         return result
 
     # «Умное» нахождение «просветов» на ребре
@@ -240,7 +242,7 @@ class Polyedr:
         self.nests = {}
         # Вычисление оптимального размера гнёзд сетки
         edges = [self.edges[randrange(len(self.edges))] for i in range(COUNT)]
-        self.step = sum((sqrt((e.fin.x - e.beg.x)**2 + (e.fin.y - e.beg.y)**2)
+        self.step = sum((sqrt((e.fin.x - e.beg.x) ** 2 + (e.fin.y - e.beg.y) ** 2)
                          for e in edges)) / (2 * COUNT)
         for f in self.facets:
             for i in self.to_range(f.xmin, f.xmax):

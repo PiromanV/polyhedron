@@ -22,7 +22,7 @@ class R3:
 
     @staticmethod
     def abs(self):
-        return sqrt(sum(i**2 for i in (self.x, self.y, self.z)))
+        return sqrt(sum(i ** 2 for i in (self.x, self.y, self.z)))
 
     # Поворот вокруг оси Oz
     def rz(self, fi):

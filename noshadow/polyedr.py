@@ -5,6 +5,7 @@ from common.tk_drawer import TkDrawer
 
 class Edge:
     """ Ребро полиэдра """
+
     # Параметры конструктора: начало и конец ребра (точки в R3)
 
     def __init__(self, beg, fin):
@@ -13,6 +14,7 @@ class Edge:
 
 class Facet:
     """ Грань полиэдра """
+
     # Параметры конструктора: список вершин
 
     def __init__(self, vertexes):
@@ -21,6 +23,7 @@ class Facet:
 
 class Polyedr:
     """ Полиэдр """
+
     # Параметры конструктора: файл, задающий полиэдр
 
     def __init__(self, file):

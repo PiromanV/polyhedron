@@ -3,6 +3,7 @@
 from time import time
 from common.tk_drawer import TkDrawer, x, y
 import sys
+
 try:
     exec(f'from optimize_{sys.argv[1]}.polyedr import Polyedr')
 except (IndexError, ModuleNotFoundError):

@@ -16,9 +16,9 @@ class R3CollinearMatcher:
         self.expected = expected
 
     def __eq__(self, other):
-        expected_dist = sqrt(self.expected.x**2 + self.expected.y**2 +
-                             self.expected.z**2)
-        other_dist = sqrt(other.x**2 + other.y**2 + other.z**2)
+        expected_dist = sqrt(self.expected.x ** 2 + self.expected.y ** 2 +
+                             self.expected.z ** 2)
+        other_dist = sqrt(other.x ** 2 + other.y ** 2 + other.z ** 2)
         t = self.expected.dot(other) / expected_dist / other_dist
         return isclose(t, 1.0)
 

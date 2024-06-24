@@ -4,10 +4,9 @@ from time import time
 from common.tk_drawer import TkDrawer
 from shadow.polyedr import Polyedr
 
-
 tk = TkDrawer()
 try:
-    for name in ["ccc", "cube", "box", "king", "cow"]:
+    for name in ["ccc", "cube", "box", "king", "small_cube", "cow"]:
         print("=============================================================")
         print(f"Начало работы с полиэдром '{name}'")
         start_time = time()
