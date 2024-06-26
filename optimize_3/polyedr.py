@@ -123,8 +123,8 @@ class Facet:
     # Вспомогательный метод
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
-        return n * \
-               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+        return n * (-1.0) if n.dot(self.vertexes[k - 1]
+                                   - self.center()) < 0.0 else n
 
 
 class Polyedr:

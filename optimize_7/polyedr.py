@@ -135,8 +135,8 @@ class Facet:
     # Вспомогательный метод
     def _vert(self, k):
         n = (self.vertexes[k] - self.vertexes[k - 1]).cross(Polyedr.V)
-        return n * \
-               (-1.0) if n.dot(self.vertexes[k - 1] - self.center()) < 0.0 else n
+        return n * (-1.0) if n.dot(self.vertexes[k - 1]
+                                   - self.center()) < 0.0 else n
 
 
 class Polyedr:
@@ -242,7 +242,8 @@ class Polyedr:
         self.nests = {}
         # Вычисление оптимального размера гнёзд сетки
         edges = [self.edges[randrange(len(self.edges))] for i in range(COUNT)]
-        self.step = sum((sqrt((e.fin.x - e.beg.x) ** 2 + (e.fin.y - e.beg.y) ** 2)
+        self.step = sum((sqrt((e.fin.x - e.beg.x) ** 2
+                              + (e.fin.y - e.beg.y) ** 2)
                          for e in edges)) / (2 * COUNT)
         for f in self.facets:
             for i in self.to_range(f.xmin, f.xmax):
