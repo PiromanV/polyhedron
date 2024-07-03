@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk, Canvas
 
 # Размер окна
 SIZE = 900

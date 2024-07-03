@@ -98,7 +98,7 @@ class Facet:
     # Нормаль к «горизонтальному» полупространству
     def h_normal(self):
         n = (
-                self.vertexes[1] - self.vertexes[0]).cross(
+            self.vertexes[1] - self.vertexes[0]).cross(
             self.vertexes[2] - self.vertexes[0])
         return n * (-1.0) if n.dot(Polyedr.V) < 0.0 else n
 
@@ -188,7 +188,7 @@ class Polyedr:
         return self
 
     # Метод изображения полиэдра
-    def draw(self, tk):
+    def draw(self, tk: TkDrawer):
         tk.clean()
         for e in self.edges:
             for s in e.gaps:

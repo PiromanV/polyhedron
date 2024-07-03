@@ -63,7 +63,7 @@ class Polyedr:
                     self.facets.append(Facet(vertexes))
 
     # Метод изображения полиэдра
-    def draw(self, tk):
+    def draw(self, tk: TkDrawer):
         tk.clean()
         for e in self.edges:
             tk.draw_line(e.beg, e.fin)
