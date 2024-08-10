@@ -42,22 +42,19 @@ class TestModPolyedr(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        fake_file_content = """4.0	45.0	45.0	30.0
-    8	6	24
-    -0.5	-0.5	0.5
-    -0.5	0.5	0.5
-    0.5	0.5	0.5
-    0.5	-0.5	0.5
-    -0.5	-0.5	-0.5
-    -0.5	0.5	-0.5
-    0.5	0.5	-0.5
-    0.5	-0.5	-0.5
-    4	1    2    3    4
-    4	5    6    2    1
-    4	3    2    6    7
-    4	3    7    8    4
-    4	1    4    8    5
-    4	8    7    6    5"""
+        fake_file_content = """40.0	45.0	-30.0	-60.0
+8	2	8
+0.0 0.0 0.0
+5.0 0.0 0.0
+5.0 5.0 0.0
+0.0 5.0 0.0
+1.0 1.0 3.0
+6.0 1.0 3.0
+6.0 6.0 3.0
+1.0 6.0 3.0
+4	1    2    3    4
+4	5    6    7    8
+"""
         fake_file_path = 'data/holey_box.geom'
         with patch('shadow.polyedr.open'.format(__name__),
                    new=mock_open(read_data=fake_file_content)) as _file:
@@ -68,4 +65,4 @@ class TestModPolyedr(unittest.TestCase):
         from common.tk_drawer import TkDrawer
         tk = TkDrawer()
         self.polyedr.draw(tk)
-        self.assertAlmostEqual(self.polyedr.length, 32.0)
+        self.assertAlmostEqual(self.polyedr.length, 15.0)

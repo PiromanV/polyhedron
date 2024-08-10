@@ -39,14 +39,14 @@ class Edge:
     SBEG, SFIN = 0.0, 1.0
 
     # Параметры конструктора: начало и конец ребра (точки в R3)
-    def __init__(self, beg, fin):
+    def __init__(self, beg, fin, c):
         self.beg, self.fin = beg, fin
         # Список «просветов»
         self.gaps = [Segment(Edge.SBEG, Edge.SFIN)]
 
         self.length = R3.abs(beg - fin)
         # Удовлетворяет ли условиям мод.70
-        self.special = True if 2.0 < (beg + fin).x < 6.0 else False
+        self.special = 2.0 < (beg + fin).x / c < 6.0
 
     # Учёт тени от одной грани
     def shadow(self, facet):
@@ -139,6 +139,9 @@ class Polyedr:
         # суммарная длина ребер, удволетворяющих условиям задачи на модификацию
         self.length = 0.0
 
+        # Коэффициент гомотетии
+        self.homo = 0.0
+
         # список строк файла
         with open(file) as f:
             for i, line in enumerate(f):
@@ -146,7 +149,7 @@ class Polyedr:
                     # обрабатываем первую строку; buf - вспомогательный массив
                     buf = line.split()
                     # коэффициент гомотетии
-                    c = float(buf.pop(0))
+                    self.homo = float(buf.pop(0))
                     # углы Эйлера, определяющие вращение
                     alpha, beta, gamma = (float(x) * pi / 180.0 for x in buf)
                 elif i == 1:
@@ -156,7 +159,7 @@ class Polyedr:
                     # задание всех вершин полиэдра
                     x, y, z = (float(x) for x in line.split())
                     self.vertexes.append(R3(x, y, z).rz(
-                        alpha).ry(beta).rz(gamma) * c)
+                        alpha).ry(beta).rz(gamma) * self.homo)
                 else:
                     # вспомогательный массив
                     buf = line.split()
@@ -166,7 +169,7 @@ class Polyedr:
                     vertexes = list(self.vertexes[int(n) - 1] for n in buf)
                     # задание рёбер грани
                     for n in range(size):
-                        self.edges.append(Edge(vertexes[n - 1], vertexes[n]))
+                        self.edges.append(Edge(vertexes[n - 1], vertexes[n], self.homo))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))
 
@@ -176,6 +179,6 @@ class Polyedr:
         for e in self.edges:
             for f in self.facets:
                 e.shadow(f)
-            self.length += e.length * e.special
+            self.length += (e.length / self.homo) * e.special
             for s in e.gaps:
                 tk.draw_line(e.r3(s.beg), e.r3(s.fin))
