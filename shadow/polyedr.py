@@ -169,7 +169,8 @@ class Polyedr:
                     vertexes = list(self.vertexes[int(n) - 1] for n in buf)
                     # задание рёбер грани
                     for n in range(size):
-                        self.edges.append(Edge(vertexes[n - 1], vertexes[n], self.homo))
+                        self.edges.append(Edge(vertexes[n - 1],
+                                               vertexes[n], self.homo))
                     # задание самой грани
                     self.facets.append(Facet(vertexes))
 
