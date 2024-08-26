@@ -177,6 +177,7 @@ class Polyedr:
     # Метод изображения полиэдра
     def draw(self, tk: TkDrawer):  # pragma: no cover
         tk.clean()
+        tk.draw_zone(self.homo)
         for e in self.edges:
             for f in self.facets:
                 e.shadow(f)

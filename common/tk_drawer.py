@@ -43,6 +43,13 @@ class TkDrawer:
         self.canvas.create_line(x(p), y(p), x(q), y(q), fill="black", width=1)
         self.root.update()
 
+    # Отрисовка зоны, удовлетворяющей условию мод.70
+    def draw_zone(self, h):
+        self.canvas.create_rectangle(SIZE / 2 + SCALE * h, 0,
+                                     SIZE / 2 + SCALE * 3 * h, SIZE,
+                                     fill="green")
+        self.root.update()
+
 
 if __name__ == "__main__":  # pragma: no cover
 
